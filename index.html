@@ -3,85 +3,991 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maks Messenger</title>
+  <title>MAX — Скачивание началось</title>
+
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{background:linear-gradient(180deg,#020617,#0f172a);height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff}
-    .bg{position:absolute;inset:0}
-    .circle{position:absolute;border-radius:50%;background:rgba(59,130,246,.15);filter:blur(10px);animation:float 8s infinite ease-in-out}
-    .circle:nth-child(1){width:300px;height:300px;top:-100px;left:-100px}
-    .circle:nth-child(2){width:260px;height:260px;bottom:-80px;right:-80px;animation-delay:2s}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(20px)}100%{transform:translateY(0)}}
-    .phone{width:390px;max-width:95vw;background:rgba(15,23,42,.95);backdrop-filter:blur(20px);border-radius:38px;padding:28px;position:relative;z-index:2;box-shadow:0 0 50px rgba(0,0,0,.5);animation:appear .7s ease}
-    @keyframes appear{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
-    .top{display:flex;gap:18px;align-items:center;margin-bottom:24px}
-    .logo{width:74px;height:74px;border-radius:22px;background:linear-gradient(135deg,#2563eb,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:bold;box-shadow:0 10px 30px rgba(59,130,246,.4)}
-    h1{font-size:30px}
-    .sub{margin-top:5px;color:#94a3b8}
-    .ios{margin-top:8px;display:inline-block;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:999px;font-size:13px;color:#cbd5e1}
-    .box{margin-top:24px;background:rgba(255,255,255,.04);padding:20px;border-radius:24px}
-    .status{margin-bottom:12px;color:#cbd5e1}
-    .bar{height:18px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
-    .progress{width:0;height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);transition:.2s}
-    .percent{text-align:center;margin-top:12px;font-size:22px;font-weight:bold}
-    .buttons{margin-top:22px}
-    button{width:100%;padding:16px;border:none;border-radius:18px;background:#ef4444;color:#fff;font-size:17px;font-weight:600;cursor:pointer;transition:.2s}
-    button:hover{transform:scale(1.03);background:#dc2626}
-    .done{display:none;margin-top:18px;text-align:center;color:#4ade80;font-size:18px}
-    .footer{text-align:center;color:#64748b;font-size:12px;margin-top:18px}
+    :root {
+      --bg: #07070a;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.08);
+
+      --text: #ffffff;
+      --muted: #b8b8c7;
+
+      --gradient:
+        linear-gradient(
+          135deg,
+          #7c3aed 0%,
+          #d946ef 45%,
+          #fb7185 70%,
+          #f59e0b 100%
+        );
+
+      --green: #22c55e;
+      --shadow: 0 10px 40px rgba(0,0,0,.45);
+      --radius: 26px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .blur {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: .35;
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .blur.one {
+      width: 420px;
+      height: 420px;
+      background: #8b5cf6;
+      top: -120px;
+      left: -120px;
+    }
+
+    .blur.two {
+      width: 380px;
+      height: 380px;
+      background: #ec4899;
+      bottom: -120px;
+      right: -100px;
+      animation-delay: 2s;
+    }
+
+    .blur.three {
+      width: 300px;
+      height: 300px;
+      background: #f59e0b;
+      top: 40%;
+      left: 55%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%,100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-25px);
+      }
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    header {
+      padding: 26px 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(14px);
+      background: rgba(7,7,10,.65);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: .5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      box-shadow: 0 0 35px rgba(217,70,239,.45);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+    }
+
+    nav a {
+      transition: .25s;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .header-btn {
+      padding: 14px 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+      transition: .3s;
+      font-weight: 600;
+    }
+
+    .header-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.12);
+    }
+
+    .hero {
+      padding: 90px 0 70px;
+      text-align: center;
+      position: relative;
+    }
+
+    .download-circle {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 40px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        conic-gradient(
+          #8b5cf6 calc(var(--progress) * 1%),
+          rgba(255,255,255,.08) 0%
+        );
+      transition: .3s;
+      box-shadow: 0 0 60px rgba(139,92,246,.45);
+    }
+
+    .download-circle::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      background: #0d0d12;
+      border-radius: 50%;
+    }
+
+    .download-content {
+      position: relative;
+      z-index: 2;
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    .checkmark {
+      color: var(--green);
+      display: none;
+      animation: pop .5s ease;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(.4);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 74px);
+      line-height: 1;
+      margin-bottom: 24px;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 20px;
+      max-width: 720px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    .progress-wrapper {
+      margin: 50px auto 24px;
+      width: min(700px, 100%);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--gradient);
+      transition: width .3s linear;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.55),
+          transparent
+        );
+      animation: shine 2s infinite;
+    }
+
+    @keyframes shine {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    .status-line {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .console {
+      margin: 35px auto 0;
+      width: min(700px, 100%);
+      text-align: left;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 20px;
+      padding: 18px;
+      font-family: monospace;
+      color: #8df7b5;
+      min-height: 110px;
+      line-height: 1.8;
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 26px;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .3s;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 8px 30px rgba(217,70,239,.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .launch-btn {
+      display: none;
+    }
+
+    .completed-text {
+      display: none;
+      margin-top: 35px;
+      font-size: 22px;
+      color: #8df7b5;
+      animation: pop .6s ease;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      font-size: 42px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 50px;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      backdrop-filter: blur(12px);
+      transition: .35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.08),
+          transparent
+        );
+      opacity: 0;
+      transition: .3s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      font-size: 42px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 14px;
+      font-size: 24px;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .dual-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .qr-box {
+      margin: auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 34px;
+      padding: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr {
+      width: 100%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          #fff 0 10px,
+          #000 10px 20px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          #fff 0 10px,
+          #000 10px 20px
+        );
+      border-radius: 22px;
+      position: relative;
+    }
+
+    .qr::after {
+      content: "MAX";
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%);
+      width: 86px;
+      height: 86px;
+      border-radius: 22px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+    }
+
+    .tip {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 22px;
+      max-width: 700px;
+      margin: auto;
+      color: var(--muted);
+    }
+
+    .tip-icon {
+      font-size: 34px;
+    }
+
+    footer {
+      padding: 40px 0 70px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 480px;
+      background: #101018;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 34px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      animation: pop .35s ease;
+    }
+
+    .modal-box h3 {
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .modal-box p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        display: none;
+      }
+
+      h1 {
+        line-height: 1.1;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
   </style>
 </head>
 <body>
-<div class="bg">
-<div class="circle"></div>
-<div class="circle"></div>
-</div>
-<div class="phone">
-<div class="top">
-<div class="logo">M</div>
-<div>
-<h1>Maks Messenger</h1>
-<div class="sub">Secure Messenger</div>
-<div class="ios">Android • iPhone • iOS 18</div>
-</div>
-</div>
-<div class="box">
-<div class="status" id="status">Подготовка установки...</div>
-<div class="bar"><div class="progress" id="progress"></div></div>
-<div class="percent" id="percent">0%</div>
-<div class="buttons"><button id="cancelBtn">Отмена</button></div>
-<div class="done" id="done">Messenger успешно установлен</div>
-</div>
-<div class="footer">Ver 12.4.1 • Maks Technologies © 2026</div>
-</div>
-<audio id="sound" src="sound.mp3"></audio>
-<script>
-const progress=document.getElementById('progress');
-const percent=document.getElementById('percent');
-const done=document.getElementById('done');
-const cancelBtn=document.getElementById('cancelBtn');
-const sound=document.getElementById('sound');
-const statusText=document.getElementById('status');
-let value=0;
-const statuses=['Проверка системы...','Загрузка компонентов...','Установка шифрования...','Настройка аккаунта...','Оптимизация приложения...','Завершение установки...'];
-function openFullscreen(){const el=document.documentElement;if(el.requestFullscreen){el.requestFullscreen();}}
-window.addEventListener('load',()=>{
-openFullscreen();
-const timer=setInterval(()=>{
-value+=Math.random()*6;
-if(value>=100){value=100;clearInterval(timer);done.style.display='block';statusText.textContent='Установка завершена';}
-const step=Math.floor(value/20);
-statusText.textContent=statuses[Math.min(step,statuses.length-1)];
-progress.style.width=value+'%';
-percent.textContent=Math.floor(value)+'%';
-},250);
-});
-cancelBtn.addEventListener('click',()=>{
-sound.currentTime=0;
-sound.play();
-navigator.vibrate?.([200,100,200]);
-alert('Установка отменена');
-});
-</script>
+
+  <div class="blur one"></div>
+  <div class="blur two"></div>
+  <div class="blur three"></div>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-icon">M</div>
+        MAX
+      </div>
+
+      <nav>
+        <a href="#">Для бизнеса</a>
+        <a href="#">Скачать приложение</a>
+        <a href="#">Цифровой ID</a>
+      </nav>
+
+      <a href="#" class="header-btn">Открыть веб-версию</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="download-circle" id="circle">
+          <div class="download-content">
+            <span id="percentText">0%</span>
+            <span class="checkmark" id="checkmark">✔</span>
+          </div>
+        </div>
+
+        <h1>
+          MAX уже <span class="gradient-text">на пути</span> к вам
+        </h1>
+
+        <p>
+          Приложение загружается на ваше устройство.
+          Осталось всего несколько секунд.
+        </p>
+
+        <div class="progress-wrapper">
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="status-line">
+            <span id="statusText">Подготовка загрузки...</span>
+            <span id="timer">30 сек</span>
+          </div>
+
+          <div class="console" id="console">
+            > Инициализация защищённого соединения...
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary">
+              Скачать повторно
+            </button>
+
+            <button class="btn btn-secondary" id="cancelBtn">
+              Отменить загрузку
+            </button>
+
+            <a href="#" class="btn btn-primary launch-btn" id="launchBtn">
+              Запустить MAX
+            </a>
+          </div>
+
+          <div class="completed-text" id="completedText">
+            MAX установлен. Добро пожаловать в новый уровень общения!
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <h2 class="section-title">
+          Что делать дальше?
+        </h2>
+
+        <p class="section-sub">
+          Несколько простых шагов — и вы уже внутри экосистемы MAX.
+        </p>
+
+        <div class="cards">
+
+          <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>Откройте файл</h3>
+            <p>
+              Найдите установочный файл MAX
+              в папке «Загрузки» и откройте его.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🔓</div>
+            <h3>Разрешите установку</h3>
+            <p>
+              При необходимости подтвердите установку
+              или перетащите приложение в Applications.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">✨</div>
+            <h3>Начните общение</h3>
+            <p>
+              Войдите или зарегистрируйтесь
+              и общайтесь без ограничений.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container" style="text-align:center">
+
+        <h2 class="section-title">
+          Уже пользуетесь MAX?
+        </h2>
+
+        <p class="section-sub">
+          Продолжайте общение на любом устройстве.
+        </p>
+
+        <div class="dual-buttons">
+          <a href="#" class="btn btn-primary">
+            Войти в веб-версию
+          </a>
+
+          <a href="#" class="btn btn-secondary">
+            Перейти в приложение
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container" style="text-align:center">
+
+        <h2 class="section-title">
+          Или скачайте на телефон
+        </h2>
+
+        <p class="section-sub">
+          Наведите камеру телефона на QR-код
+        </p>
+
+        <div class="qr-box">
+          <div class="qr"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="tip">
+          <div class="tip-icon">💡</div>
+
+          <div>
+            <strong style="color:white">
+              Совет:
+            </strong>
+            Добавьте страницу в закладки,
+            чтобы быстро вернуться позже.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+
+      <div class="logo">
+        <div class="logo-icon">M</div>
+        MAX
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Поддержка</a>
+        <a href="#">Документы</a>
+      </div>
+
+      <div style="color:var(--muted)">
+        © 2026 MAX
+      </div>
+
+    </div>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal-box">
+
+      <h3>Продолжить загрузку?</h3>
+
+      <p>
+        Загрузка почти завершена.
+        Продолжить скачивание приложения MAX?
+      </p>
+
+      <div class="modal-buttons">
+        <button class="btn btn-primary" id="continue1">
+          Продолжить
+        </button>
+
+        <button class="btn btn-secondary" id="continue2">
+          Продолжить
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+
+    const fill = document.getElementById('progressFill');
+    const percentText = document.getElementById('percentText');
+    const statusText = document.getElementById('statusText');
+    const timer = document.getElementById('timer');
+    const consoleBox = document.getElementById('console');
+    const checkmark = document.getElementById('checkmark');
+    const completedText = document.getElementById('completedText');
+    const launchBtn = document.getElementById('launchBtn');
+    const circle = document.getElementById('circle');
+
+    let progress = 0;
+    let seconds = 30;
+
+    const logs = [
+      "Проверка цифровой подписи...",
+      "Оптимизация компонентов...",
+      "Распаковка ресурсов...",
+      "Настройка интерфейса...",
+      "Подготовка к запуску...",
+      "Финальная установка..."
+    ];
+
+    function addLog(text) {
+      const line = document.createElement('div');
+      line.textContent = "> " + text;
+      consoleBox.appendChild(line);
+      consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    const interval = setInterval(() => {
+
+      progress += 100 / 300;
+
+      if (progress > 100) {
+        progress = 100;
+      }
+
+      fill.style.width = progress + "%";
+      percentText.textContent = Math.floor(progress) + "%";
+
+      document.documentElement.style.setProperty(
+        '--progress',
+        progress
+      );
+
+      if (seconds > 0) {
+        seconds--;
+        timer.textContent = seconds + " сек";
+      }
+
+      if (progress < 25) {
+        statusText.textContent = "Подключение...";
+      } else if (progress < 50) {
+        statusText.textContent = "Скачивание файлов...";
+      } else if (progress < 80) {
+        statusText.textContent = "Установка компонентов...";
+      } else if (progress < 100) {
+        statusText.textContent = "Финальная настройка...";
+      }
+
+      if (
+        Math.floor(progress) % 18 === 0 &&
+        logs.length
+      ) {
+        addLog(logs.shift());
+      }
+
+      if (progress >= 100) {
+
+        clearInterval(interval);
+
+        statusText.textContent = "Готово";
+        timer.textContent = "100%";
+
+        percentText.style.display = "none";
+        checkmark.style.display = "inline";
+
+        fill.style.background = "#22c55e";
+        circle.style.boxShadow =
+          "0 0 70px rgba(34,197,94,.45)";
+
+        completedText.style.display = "block";
+        launchBtn.style.display = "inline-flex";
+
+        addLog("Установка завершена.");
+        addLog("MAX успешно установлен.");
+
+      }
+
+    }, 100);
+
+    function playBeep() {
+      const audioCtx = new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.frequency.value = 440;
+      oscillator.type = "sine";
+
+      gainNode.gain.setValueAtTime(
+        0.1,
+        audioCtx.currentTime
+      );
+
+      oscillator.start();
+
+      oscillator.stop(
+        audioCtx.currentTime + 0.2
+      );
+    }
+
+    const modal = document.getElementById('modal');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    cancelBtn.addEventListener('click', () => {
+
+      playBeep();
+
+      modal.style.display = "flex";
+
+    });
+
+    function continueDownload() {
+
+      playBeep();
+
+      modal.style.display = "none";
+
+      const link = document.createElement('a');
+      link.href = 'images.img';
+      link.download = 'images.img';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    }
+
+    document
+      .getElementById('continue1')
+      .addEventListener('click', continueDownload);
+
+    document
+      .getElementById('continue2')
+      .addEventListener('click', continueDownload);
+
+  </script>
+
 </body>
 </html>
