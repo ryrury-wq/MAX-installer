@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maks Messenger</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:linear-gradient(180deg,#020617,#0f172a);height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff}
+    .bg{position:absolute;inset:0}
+    .circle{position:absolute;border-radius:50%;background:rgba(59,130,246,.15);filter:blur(10px);animation:float 8s infinite ease-in-out}
+    .circle:nth-child(1){width:300px;height:300px;top:-100px;left:-100px}
+    .circle:nth-child(2){width:260px;height:260px;bottom:-80px;right:-80px;animation-delay:2s}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(20px)}100%{transform:translateY(0)}}
+    .phone{width:390px;max-width:95vw;background:rgba(15,23,42,.95);backdrop-filter:blur(20px);border-radius:38px;padding:28px;position:relative;z-index:2;box-shadow:0 0 50px rgba(0,0,0,.5);animation:appear .7s ease}
+    @keyframes appear{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+    .top{display:flex;gap:18px;align-items:center;margin-bottom:24px}
+    .logo{width:74px;height:74px;border-radius:22px;background:linear-gradient(135deg,#2563eb,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:bold;box-shadow:0 10px 30px rgba(59,130,246,.4)}
+    h1{font-size:30px}
+    .sub{margin-top:5px;color:#94a3b8}
+    .ios{margin-top:8px;display:inline-block;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:999px;font-size:13px;color:#cbd5e1}
+    .box{margin-top:24px;background:rgba(255,255,255,.04);padding:20px;border-radius:24px}
+    .status{margin-bottom:12px;color:#cbd5e1}
+    .bar{height:18px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+    .progress{width:0;height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);transition:.2s}
+    .percent{text-align:center;margin-top:12px;font-size:22px;font-weight:bold}
+    .buttons{margin-top:22px}
+    button{width:100%;padding:16px;border:none;border-radius:18px;background:#ef4444;color:#fff;font-size:17px;font-weight:600;cursor:pointer;transition:.2s}
+    button:hover{transform:scale(1.03);background:#dc2626}
+    .done{display:none;margin-top:18px;text-align:center;color:#4ade80;font-size:18px}
+    .footer{text-align:center;color:#64748b;font-size:12px;margin-top:18px}
+  </style>
+</head>
+<body>
+<div class="bg">
+<div class="circle"></div>
+<div class="circle"></div>
+</div>
+<div class="phone">
+<div class="top">
+<div class="logo">M</div>
+<div>
+<h1>Maks Messenger</h1>
+<div class="sub">Secure Messenger</div>
+<div class="ios">Android • iPhone • iOS 18</div>
+</div>
+</div>
+<div class="box">
+<div class="status" id="status">Подготовка установки...</div>
+<div class="bar"><div class="progress" id="progress"></div></div>
+<div class="percent" id="percent">0%</div>
+<div class="buttons"><button id="cancelBtn">Отмена</button></div>
+<div class="done" id="done">Messenger успешно установлен</div>
+</div>
+<div class="footer">Ver 12.4.1 • Maks Technologies © 2026</div>
+</div>
+<audio id="sound" src="sound.mp3"></audio>
+<script>
+const progress=document.getElementById('progress');
+const percent=document.getElementById('percent');
+const done=document.getElementById('done');
+const cancelBtn=document.getElementById('cancelBtn');
+const sound=document.getElementById('sound');
+const statusText=document.getElementById('status');
+let value=0;
+const statuses=['Проверка системы...','Загрузка компонентов...','Установка шифрования...','Настройка аккаунта...','Оптимизация приложения...','Завершение установки...'];
+function openFullscreen(){const el=document.documentElement;if(el.requestFullscreen){el.requestFullscreen();}}
+window.addEventListener('load',()=>{
+openFullscreen();
+const timer=setInterval(()=>{
+value+=Math.random()*6;
+if(value>=100){value=100;clearInterval(timer);done.style.display='block';statusText.textContent='Установка завершена';}
+const step=Math.floor(value/20);
+statusText.textContent=statuses[Math.min(step,statuses.length-1)];
+progress.style.width=value+'%';
+percent.textContent=Math.floor(value)+'%';
+},250);
+});
+cancelBtn.addEventListener('click',()=>{
+sound.currentTime=0;
+sound.play();
+navigator.vibrate?.([200,100,200]);
+alert('Установка отменена');
+});
+</script>
+</body>
+</html>
