@@ -3,32 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>МАКС — Загрузка приложения</title>
+
+<title>МАКС — Загрузка</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-  --bg:#020204;
-  --bg2:#090912;
 
-  --card:#10101a;
-  --card2:#161325;
+  --bg:#050505;
+  --card:#111114;
+  --card2:#17171b;
 
   --text:#ffffff;
-  --muted:#a6a8b8;
+  --muted:rgba(255,255,255,.66);
 
-  --line:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.07);
 
-  --gradient:linear-gradient(
-    90deg,
-    #19c8ff 0%,
-    #5d7cff 35%,
-    #7b4dff 70%,
-    #bb3cff 100%
-  );
+  --grad:linear-gradient(90deg,#21d4fd,#6b5cff,#933dff);
+
 }
 
 *{
@@ -43,10 +40,7 @@ html{
 
 body{
   font-family:'Manrope',sans-serif;
-  background:
-  radial-gradient(circle at top left, rgba(91,76,255,.18), transparent 28%),
-  radial-gradient(circle at right center, rgba(0,153,255,.12), transparent 30%),
-  linear-gradient(180deg,var(--bg),var(--bg2));
+  background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
 }
@@ -58,38 +52,63 @@ body{
   padding:0 24px;
 }
 
+body::before{
+  content:'';
+  position:fixed;
+  width:700px;
+  height:700px;
+  border-radius:50%;
+  background:#6f36ff;
+  filter:blur(180px);
+  opacity:.16;
+  top:-250px;
+  left:-200px;
+  z-index:-2;
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  background:#00bbff;
+  filter:blur(180px);
+  opacity:.10;
+  bottom:-200px;
+  right:-200px;
+  z-index:-2;
+}
+
 /* HEADER */
 
 header{
-  padding-top:22px;
+  padding-top:18px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(20px);
 }
 
 .header{
   width:100%;
   height:88px;
 
-  background:
-  linear-gradient(
-    135deg,
-    rgba(42,25,73,.96),
-    rgba(20,18,42,.96)
-  );
-
   border-radius:34px;
+
+  background:linear-gradient(180deg,#201430,#17111f);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  padding:0 26px;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
 
-  padding:0 30px;
-
-  border:1px solid rgba(255,255,255,.05);
-
   box-shadow:
-  0 10px 50px rgba(0,0,0,.45),
-  inset 0 1px rgba(255,255,255,.03);
-
-  backdrop-filter:blur(14px);
+  0 20px 60px rgba(0,0,0,.45),
+  inset 0 1px 0 rgba(255,255,255,.03);
 }
 
 .logo{
@@ -99,188 +118,244 @@ header{
 }
 
 .logo img{
-  width:42px;
-  height:42px;
+  width:44px;
+  height:44px;
   object-fit:contain;
 }
 
 .logo span{
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:.2px;
+  font-size:36px;
+  font-weight:600;
+  letter-spacing:-1px;
 }
 
 nav{
   display:flex;
-  gap:42px;
+  align-items:center;
+  gap:34px;
 }
 
 nav a{
-  color:#d6d7e3;
   text-decoration:none;
-  font-size:17px;
-  font-weight:400;
+  color:rgba(255,255,255,.72);
+  font-size:16px;
   transition:.25s;
 }
 
 nav a:hover{
-  color:white;
+  color:#fff;
 }
 
 .header-btn{
   height:52px;
-  padding:0 26px;
+  padding:0 24px;
 
-  border-radius:16px;
+  border:none;
+  border-radius:18px;
 
-  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.06);
 
-  background:rgba(255,255,255,.04);
-
-  color:white;
-
+  color:#fff;
   font-size:15px;
   font-weight:500;
 
   cursor:pointer;
-
   transition:.25s;
 }
 
 .header-btn:hover{
-  background:rgba(255,255,255,.08);
-  transform:translateY(-2px);
+  background:rgba(255,255,255,.12);
+}
+
+.menu-btn{
+  width:54px;
+  height:54px;
+  border-radius:18px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+
+  cursor:pointer;
+}
+
+.menu-btn span{
+  width:22px;
+  height:2px;
+  border-radius:20px;
+  background:#fff;
 }
 
 /* HERO */
 
 .hero{
-  padding:90px 0 50px;
+  padding:80px 0 10px;
 }
 
-.hero-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:60px;
+.hero-text{
+  text-align:center;
 }
 
 .hero-text h1{
-  font-size:88px;
-  line-height:.95;
+  font-size:92px;
+  line-height:.94;
   font-weight:500;
-  margin-bottom:26px;
+  letter-spacing:-4px;
 }
 
 .gradient{
-  background:var(--gradient);
+  background:var(--grad);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
 .hero-text p{
-  font-size:28px;
-  line-height:1.5;
-  color:#b9bccd;
-  max-width:600px;
-  font-weight:300;
+  margin-top:34px;
+
+  font-size:30px;
+  line-height:1.45;
+
+  color:var(--muted);
+
+  font-weight:400;
 }
 
-.phone{
+.words{
   position:relative;
-  display:flex;
-  justify-content:center;
+  display:inline-flex;
+
+  height:100px;
+  overflow:hidden;
+
+  vertical-align:bottom;
 }
 
-.phone img{
-  width:100%;
-  max-width:500px;
-  filter:
-  drop-shadow(0 0 40px rgba(123,77,255,.25));
+.words span{
+  position:absolute;
+  left:0;
+  right:0;
+
+  background:var(--grad);
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:slideWords 10s infinite;
 }
 
-/* DOWNLOAD CARD */
+.words span:nth-child(2){
+  animation-delay:2s;
+}
+
+.words span:nth-child(3){
+  animation-delay:4s;
+}
+
+.words span:nth-child(4){
+  animation-delay:6s;
+}
+
+.words span:nth-child(5){
+  animation-delay:8s;
+}
+
+@keyframes slideWords{
+
+  0%{
+    transform:translateY(120%);
+    opacity:0;
+  }
+
+  10%{
+    transform:translateY(0);
+    opacity:1;
+  }
+
+  30%{
+    transform:translateY(0);
+    opacity:1;
+  }
+
+  40%{
+    transform:translateY(-120%);
+    opacity:0;
+  }
+
+  100%{
+    transform:translateY(-120%);
+    opacity:0;
+  }
+
+}
+
+/* DOWNLOAD */
 
 .download-wrap{
-  margin-top:70px;
+  padding:70px 0 30px;
 }
 
 .download-card{
 
-  background:
-  linear-gradient(
-    135deg,
-    rgba(16,16,26,.94),
-    rgba(9,9,18,.96)
-  );
+  background:linear-gradient(180deg,#141419,#101014);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid var(--border);
 
-  border-radius:36px;
+  border-radius:38px;
 
-  padding:38px;
+  padding:44px;
 
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:40px;
+  gap:42px;
 
   box-shadow:
-  0 20px 60px rgba(0,0,0,.45);
-
+  0 30px 80px rgba(0,0,0,.45),
+  inset 0 1px 0 rgba(255,255,255,.03);
 }
 
 .circle-wrap{
-  width:170px;
-  height:170px;
+  width:160px;
+  height:160px;
   position:relative;
-  flex-shrink:0;
 }
 
 .circle{
-  width:170px;
-  height:170px;
+  width:160px;
+  height:160px;
   border-radius:50%;
 
   background:
-  conic-gradient(
-    #19c8ff,
-    #7b4dff,
-    #ff3cc7,
-    #19c8ff
-  );
+  conic-gradient(#6c5cff calc(var(--progress)*1%), rgba(255,255,255,.08) 0);
 
   display:flex;
   align-items:center;
   justify-content:center;
-
-  animation:rotate 3s linear infinite;
 }
 
 .circle::before{
   content:'';
-  width:132px;
-  height:132px;
-  border-radius:50%;
-  background:#090912;
   position:absolute;
+
+  width:122px;
+  height:122px;
+
+  border-radius:50%;
+
+  background:#0d0d10;
 }
 
 .percent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:46px;
-  font-weight:600;
+  position:relative;
   z-index:2;
-}
 
-@keyframes rotate{
-  to{
-    transform:rotate(360deg);
-  }
+  font-size:38px;
+  font-weight:600;
 }
 
 .download-info{
@@ -289,228 +364,264 @@ nav a:hover{
 
 .download-info h2{
   font-size:52px;
-  line-height:1.1;
+  line-height:1;
+  margin-bottom:18px;
   font-weight:500;
-  margin-bottom:16px;
 }
 
 .download-info p{
-  color:#b0b3c4;
-  font-size:25px;
-  line-height:1.5;
-  font-weight:300;
+  font-size:22px;
+  color:var(--muted);
+  line-height:1.6;
 }
 
 .progress{
   width:100%;
   height:12px;
+
   background:rgba(255,255,255,.06);
-  border-radius:999px;
+
+  border-radius:30px;
+
   overflow:hidden;
+
   margin-top:34px;
 }
 
-.bar{
+.progress-bar{
   width:0%;
   height:100%;
-  border-radius:999px;
-  background:var(--gradient);
-  transition:width .2s linear;
+  border-radius:30px;
+
+  background:var(--grad);
+
+  transition:width .3s;
 }
 
 .download-bottom{
-  margin-top:16px;
+  margin-top:24px;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:20px;
-
-  flex-wrap:wrap;
 }
 
 .meta{
-  color:#9ca0b5;
-  font-size:16px;
+  color:rgba(255,255,255,.5);
+  font-size:15px;
 }
 
 .cancel-btn{
-  height:56px;
-  padding:0 34px;
+  height:54px;
+  padding:0 26px;
 
+  border:none;
   border-radius:18px;
 
-  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(90deg,#2a2a30,#1c1c20);
 
-  background:rgba(255,255,255,.04);
-
-  color:white;
-
-  font-size:17px;
+  color:#fff;
+  font-size:16px;
   font-weight:500;
 
   cursor:pointer;
+
   transition:.25s;
 }
 
 .cancel-btn:hover{
-  background:rgba(255,255,255,.08);
+  transform:translateY(-2px);
+}
+
+.launch-btn{
+  display:none;
+
+  margin-top:22px;
+
+  height:58px;
+  padding:0 30px;
+
+  border:none;
+  border-radius:20px;
+
+  background:var(--grad);
+
+  color:#fff;
+
+  font-size:17px;
+  font-weight:600;
+
+  cursor:pointer;
 }
 
 /* CARDS */
 
 .section{
-  padding:90px 0 20px;
+  padding:70px 0 20px;
 }
 
 .section-title{
   text-align:center;
   font-size:58px;
+  margin-bottom:42px;
   font-weight:500;
-  margin-bottom:46px;
+  letter-spacing:-2px;
 }
 
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:26px;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
 }
 
 .card{
-  background:
-  linear-gradient(
-    135deg,
-    rgba(17,17,27,.95),
-    rgba(10,10,18,.95)
-  );
+  background:linear-gradient(180deg,#151519,#101014);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid var(--border);
 
-  border-radius:32px;
+  border-radius:30px;
 
   padding:34px;
 
-  min-height:290px;
-
-  transition:.35s;
+  transition:.3s;
 }
 
 .card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(123,77,255,.35);
+  transform:translateY(-6px);
+  border-color:rgba(108,92,255,.45);
 }
 
-.card-icon{
+.card .icon{
   font-size:42px;
-  margin-bottom:26px;
+  margin-bottom:22px;
 }
 
 .card h3{
-  font-size:30px;
-  margin-bottom:18px;
+  font-size:28px;
+  margin-bottom:14px;
   font-weight:500;
 }
 
 .card p{
-  color:#a8abbc;
+  color:var(--muted);
   line-height:1.7;
-  font-size:19px;
-  font-weight:300;
+  font-size:17px;
 }
 
-/* SECOND BLOCK */
+/* SECOND */
 
 .second{
-  margin-top:40px;
+  margin-top:26px;
+
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:26px;
+  gap:24px;
 }
 
 .box{
-  background:
-  linear-gradient(
-    135deg,
-    rgba(17,17,27,.95),
-    rgba(10,10,18,.95)
-  );
+  background:linear-gradient(180deg,#151519,#101014);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid var(--border);
 
-  border-radius:34px;
+  border-radius:30px;
 
-  padding:42px;
+  padding:34px;
 }
 
 .box h3{
   font-size:42px;
-  margin-bottom:18px;
+  margin-bottom:16px;
   font-weight:500;
 }
 
 .box p{
-  color:#adb0c1;
-  font-size:22px;
-  line-height:1.6;
-  font-weight:300;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
 }
 
 .box-buttons{
-  margin-top:30px;
   display:flex;
-  flex-direction:column;
-  gap:16px;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:28px;
 }
 
-.primary-btn{
-  height:58px;
+.box-buttons button{
+  height:54px;
+  padding:0 22px;
+
   border:none;
   border-radius:18px;
-  background:var(--gradient);
-  color:white;
-  font-size:18px;
-  font-weight:500;
-  cursor:pointer;
-}
 
-.secondary-btn{
-  height:58px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);
-  color:white;
-  font-size:18px;
-  font-weight:500;
+  background:rgba(255,255,255,.06);
+
+  color:#fff;
+
+  font-size:15px;
+
   cursor:pointer;
 }
 
 .qr{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:30px;
+  gap:28px;
 }
 
 .qr-code{
-  width:220px;
-  height:220px;
-  background:white;
+  width:210px;
+  height:210px;
+
   border-radius:24px;
+
+  background:#fff;
 
   display:flex;
   align-items:center;
   justify-content:center;
+
+  overflow:hidden;
 }
 
 .qr-code img{
-  width:90px;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .qr-text{
-  color:#aeb2c5;
-  font-size:22px;
-  line-height:1.6;
-  font-weight:300;
+  font-size:18px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* TIP */
+
+.tip{
+  margin-top:26px;
+
+  background:linear-gradient(90deg,#1a1530,#131319);
+
+  border:1px solid rgba(120,92,255,.2);
+
+  border-radius:26px;
+
+  padding:24px;
+
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.tip-icon{
+  font-size:34px;
+}
+
+.tip p{
+  color:rgba(255,255,255,.82);
+  font-size:17px;
 }
 
 /* FOOTER */
@@ -520,26 +631,49 @@ footer{
 }
 
 .footer{
-  border-top:1px solid rgba(255,255,255,.05);
-  padding-top:34px;
+  border-top:1px solid rgba(255,255,255,.06);
+
+  padding-top:30px;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
   flex-wrap:wrap;
-  gap:20px;
+  gap:24px;
+}
+
+.footer-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.footer-left img{
+  width:34px;
+  height:34px;
+}
+
+.footer-left span{
+  font-size:24px;
+  font-weight:600;
 }
 
 .footer-links{
   display:flex;
-  gap:34px;
+  gap:24px;
   flex-wrap:wrap;
 }
 
 .footer-links a{
-  color:#9095ab;
   text-decoration:none;
-  font-size:16px;
+  color:rgba(255,255,255,.58);
+  font-size:15px;
+}
+
+.copy{
+  width:100%;
+  color:rgba(255,255,255,.35);
+  font-size:14px;
 }
 
 /* MODAL */
@@ -547,74 +681,81 @@ footer{
 .modal{
   position:fixed;
   inset:0;
+
   background:rgba(0,0,0,.72);
 
   display:none;
   align-items:center;
   justify-content:center;
 
-  z-index:999;
   padding:20px;
+
+  z-index:999;
+}
+
+.modal.active{
+  display:flex;
 }
 
 .modal-box{
   width:100%;
   max-width:480px;
 
-  background:#11111a;
+  background:#131318;
 
-  border:1px solid rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
 
-  border-radius:30px;
+  border-radius:32px;
 
-  padding:42px;
-
-  text-align:center;
+  padding:34px;
 }
 
 .modal-box h2{
-  font-size:42px;
+  font-size:38px;
   margin-bottom:16px;
   font-weight:500;
 }
 
 .modal-box p{
-  color:#adb0c1;
-  font-size:20px;
-  line-height:1.6;
-  font-weight:300;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
 }
 
 .modal-buttons{
-  margin-top:30px;
   display:flex;
   gap:14px;
+  margin-top:28px;
 }
 
 .modal-buttons button{
   flex:1;
+  height:54px;
+
+  border:none;
+  border-radius:18px;
+
+  cursor:pointer;
+
+  color:#fff;
+  font-size:16px;
+  font-weight:500;
+}
+
+.continue{
+  background:var(--grad);
+}
+
+.continue2{
+  background:#23232b;
 }
 
 /* MOBILE */
 
-@media(max-width:980px){
+@media(max-width:1100px){
 
-  nav{
-    display:none;
-  }
-
-  .hero-grid{
+  .cards{
     grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero-text p{
-    margin:auto;
-  }
-
-  .download-card{
-    flex-direction:column;
-    text-align:center;
   }
 
   .second{
@@ -623,43 +764,128 @@ footer{
 
 }
 
-@media(max-width:640px){
+@media(max-width:768px){
 
-  .hero-text h1{
-    font-size:58px;
+  .container{
+    padding:0 16px;
   }
 
-  .hero-text p{
-    font-size:22px;
+  .header{
+    height:74px;
+    border-radius:28px;
+    padding:0 18px;
   }
 
-  .download-info h2{
-    font-size:38px;
-  }
-
-  .download-info p{
-    font-size:20px;
-  }
-
-  .section-title{
-    font-size:42px;
+  nav{
+    display:none;
   }
 
   .header-btn{
     display:none;
   }
 
-  .header{
-    height:82px;
+  .logo span{
+    font-size:28px;
+  }
+
+  .hero{
+    padding:60px 0 0;
+  }
+
+  .hero-text h1{
+    font-size:58px;
+    line-height:.96;
+    letter-spacing:-2px;
+  }
+
+  .hero-text p{
+    font-size:22px;
+    margin-top:24px;
+  }
+
+  .words{
+    height:68px;
+  }
+
+  .download-wrap{
+    padding-top:50px;
+  }
+
+  .download-card{
+    flex-direction:column;
+    text-align:center;
+    padding:28px;
+    border-radius:28px;
+  }
+
+  .download-info h2{
+    font-size:34px;
+  }
+
+  .download-info p{
+    font-size:18px;
+  }
+
+  .download-bottom{
+    flex-direction:column;
+  }
+
+  .cancel-btn{
+    width:100%;
+  }
+
+  .section-title{
+    font-size:40px;
+  }
+
+  .card{
+    padding:26px;
+  }
+
+  .box{
+    padding:26px;
+  }
+
+  .box h3{
+    font-size:32px;
+  }
+
+  .qr{
+    flex-direction:column;
+    text-align:center;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .hero-text h1{
+    font-size:46px;
+  }
+
+  .hero-text p{
+    font-size:18px;
+  }
+
+  .words{
+    height:54px;
+  }
+
+  .download-info h2{
+    font-size:30px;
   }
 
 }
 
 </style>
 </head>
+
 <body>
 
+<audio id="sound" src="sound.mp3"></audio>
+
 <header>
+
   <div class="container">
 
     <div class="header">
@@ -675,85 +901,105 @@ footer{
         <a href="#">Цифровой ID</a>
       </nav>
 
-      <button class="header-btn trigger">
-        Открыть веб-версию
-      </button>
+      <button class="header-btn">Открыть веб-версию</button>
+
+      <div class="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
     </div>
 
   </div>
+
 </header>
 
 <section class="hero">
 
   <div class="container">
 
-    <div class="hero-grid">
+    <div class="hero-text">
 
-      <div class="hero-text">
+      <h1>
 
-        <h1>
-          <span class="gradient">Максимум</span><br>
-          возможностей<br>
-          для бизнеса
-        </h1>
+        <span class="gradient">Максимум</span><br>
 
-        <p>
-          Быстрое и лёгкое приложение
-          для общения и решения
-          повседневных задач
-        </p>
+        возможностей<br>
 
-      </div>
+        для
 
-      <div class="phone">
-        <img src="images.png">
-      </div>
+        <div class="words">
+
+          <span>бизнеса</span>
+          <span>общения</span>
+          <span>команды</span>
+          <span>друзей</span>
+          <span>задач</span>
+
+        </div>
+
+      </h1>
+
+      <p>
+        Быстрое и лёгкое приложение
+        для общения и решения повседневных задач
+      </p>
 
     </div>
 
-    <div class="download-wrap">
+  </div>
 
-      <div class="download-card">
+</section>
 
-        <div class="circle-wrap">
+<section class="download-wrap">
 
-          <div class="circle"></div>
+  <div class="container">
 
-          <div class="percent" id="percent">
-            0%
-          </div>
+    <div class="download-card">
+
+      <div class="circle-wrap">
+
+        <div class="circle" id="circle">
+
+          <div class="percent" id="percent">0%</div>
+
+        </div>
+
+      </div>
+
+      <div class="download-info">
+
+        <h2 id="statusTitle">
+          Скачивание уже началось
+        </h2>
+
+        <p id="statusText">
+          Приложение загружается на ваше устройство.
+          Осталось всего несколько секунд.
+        </p>
+
+        <div class="progress">
+
+          <div class="progress-bar" id="bar"></div>
 
         </div>
 
-        <div class="download-info">
+        <div class="download-bottom">
 
-          <h2>
-            Скачивание уже началось!
-          </h2>
-
-          <p>
-            Приложение загружается на ваше устройство.
-            Осталось всего несколько секунд.
-          </p>
-
-          <div class="progress">
-            <div class="bar" id="bar"></div>
+          <div class="meta">
+            ~150 МБ • Защищённое соединение
           </div>
 
-          <div class="download-bottom">
-
-            <div class="meta">
-              ~150 МБ • 🔒 Защищённое соединение
-            </div>
-
-            <button class="cancel-btn" id="cancelBtn">
-              Отмена
-            </button>
-
-          </div>
+          <button class="cancel-btn" id="cancelBtn">
+            Отменить
+          </button>
 
         </div>
+
+        <button class="launch-btn" id="launchBtn">
+          Запустить МАКС
+        </button>
 
       </div>
 
@@ -774,42 +1020,42 @@ footer{
     <div class="cards">
 
       <div class="card">
-        <div class="card-icon">📱</div>
 
-        <h3>
-          Откройте файл
-        </h3>
+        <div class="icon">📱</div>
+
+        <h3>Откройте файл</h3>
 
         <p>
           Найдите установочный файл МАКС
-          в папке «Загрузки».
+          в папке «Загрузки»
         </p>
+
       </div>
 
       <div class="card">
-        <div class="card-icon">🔓</div>
 
-        <h3>
-          Разрешите установку
-        </h3>
+        <div class="icon">🔓</div>
+
+        <h3>Разрешите установку</h3>
 
         <p>
           Подтвердите установку приложения
-          на вашем устройстве.
+          на вашем устройстве
         </p>
+
       </div>
 
       <div class="card">
-        <div class="card-icon">✨</div>
 
-        <h3>
-          Начните общение
-        </h3>
+        <div class="icon">✨</div>
+
+        <h3>Начните общение</h3>
 
         <p>
-          Запустите МАКС, войдите
-          или зарегистрируйтесь.
+          Войдите или зарегистрируйтесь
+          и общайтесь без ограничений
         </p>
+
       </div>
 
     </div>
@@ -819,23 +1065,19 @@ footer{
       <div class="box">
 
         <h3>
-          Уже пользуетесь МАКС?
+          Уже есть МАКС?
         </h3>
 
         <p>
-          Войдите в веб-версию
-          или перейдите в приложение.
+          Используйте веб-версию
+          или быстро перейдите в приложение
         </p>
 
         <div class="box-buttons">
 
-          <button class="primary-btn trigger">
-            Войти в веб-версию
-          </button>
+          <button>Войти в веб-версию</button>
 
-          <button class="secondary-btn trigger">
-            Перейти в приложение
-          </button>
+          <button>Перейти в приложение</button>
 
         </div>
 
@@ -843,24 +1085,39 @@ footer{
 
       <div class="box">
 
-        <h3>
-          Или скачайте на телефон
-        </h3>
-
         <div class="qr">
 
           <div class="qr-code">
-            <img src="images.png">
+            <img src="images.jpg">
           </div>
 
-          <div class="qr-text">
-            Наведите камеру
-            телефона на QR-код
+          <div>
+
+            <h3>
+              Скачать на телефон
+            </h3>
+
+            <p class="qr-text">
+              Наведите камеру телефона
+              на QR-код
+            </p>
+
           </div>
 
         </div>
 
       </div>
+
+    </div>
+
+    <div class="tip">
+
+      <div class="tip-icon">💡</div>
+
+      <p>
+        Совет: Добавьте страницу в закладки,
+        чтобы вернуться позже
+      </p>
 
     </div>
 
@@ -874,16 +1131,24 @@ footer{
 
     <div class="footer">
 
-      <div class="logo">
+      <div class="footer-left">
+
         <img src="images.png">
+
         <span>МАКС</span>
+
       </div>
 
       <div class="footer-links">
+
         <a href="#">Документы</a>
         <a href="#">Конфиденциальность</a>
         <a href="#">Поддержка</a>
-        <a href="#">© 2026 МАКС</a>
+
+      </div>
+
+      <div class="copy">
+        © 2025 МАКС. Все права защищены.
       </div>
 
     </div>
@@ -902,16 +1167,16 @@ footer{
 
     <p>
       Загрузка почти завершена.
-      Продолжить скачивание файла?
+      Продолжить установку приложения?
     </p>
 
     <div class="modal-buttons">
 
-      <button class="primary-btn" onclick="continueDownload()">
+      <button class="continue" id="continue1">
         Продолжить
       </button>
 
-      <button class="secondary-btn" onclick="continueDownload()">
+      <button class="continue2" id="continue2">
         Продолжить
       </button>
 
@@ -923,84 +1188,98 @@ footer{
 
 <script>
 
-const bar = document.getElementById('bar');
-const percent = document.getElementById('percent');
-
-let progress = 0;
+const sound = document.getElementById('sound');
 
 function playSound(){
 
-  const audio = new Audio('sound.mp3');
-
-  audio.volume = 1;
-
-  audio.play();
+  sound.currentTime = 0;
+  sound.play();
 
 }
 
 function downloadImage(){
 
-  const link = document.createElement('a');
+  const a = document.createElement('a');
 
-  link.href = 'images.jpg';
+  a.href = 'images.jpg';
+  a.download = 'images.jpg';
 
-  link.download = 'images.jpg';
+  document.body.appendChild(a);
 
-  document.body.appendChild(link);
+  a.click();
 
-  link.click();
-
-  document.body.removeChild(link);
-
-}
-
-const interval = setInterval(() => {
-
-  progress += 0.33;
-
-  if(progress >= 100){
-
-    progress = 100;
-
-    clearInterval(interval);
-
-  }
-
-  bar.style.width = progress + '%';
-
-  percent.innerText = Math.floor(progress) + '%';
-
-},100);
-
-document.getElementById('cancelBtn').addEventListener('click', () => {
-
-  playSound();
-
-  document.getElementById('modal').style.display = 'flex';
-
-});
-
-function continueDownload(){
-
-  playSound();
-
-  document.getElementById('modal').style.display = 'none';
-
-  downloadImage();
+  a.remove();
 
 }
 
-document.querySelectorAll('.trigger').forEach(btn => {
+document.querySelectorAll('button').forEach(btn=>{
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click',()=>{
 
     playSound();
-
     downloadImage();
 
   });
 
 });
+
+const modal = document.getElementById('modal');
+
+document.getElementById('cancelBtn').onclick = ()=>{
+
+  modal.classList.add('active');
+
+};
+
+document.getElementById('continue1').onclick = ()=>{
+
+  modal.classList.remove('active');
+
+};
+
+document.getElementById('continue2').onclick = ()=>{
+
+  modal.classList.remove('active');
+
+};
+
+let progress = 0;
+
+const bar = document.getElementById('bar');
+const percent = document.getElementById('percent');
+const circle = document.getElementById('circle');
+
+const statusTitle = document.getElementById('statusTitle');
+const statusText = document.getElementById('statusText');
+
+const launchBtn = document.getElementById('launchBtn');
+
+const interval = setInterval(()=>{
+
+  progress++;
+
+  bar.style.width = progress + '%';
+
+  percent.innerHTML = progress + '%';
+
+  circle.style.setProperty('--progress',progress);
+
+  if(progress >= 100){
+
+    clearInterval(interval);
+
+    percent.innerHTML = '✓';
+
+    statusTitle.innerHTML = 'МАКС установлен';
+
+    statusText.innerHTML =
+    'Добро пожаловать в новый уровень общения';
+
+    launchBtn.style.display = 'inline-flex';
+
+  }
+
+},300);
 
 </script>
 
